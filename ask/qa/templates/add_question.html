@@ -1,0 +1,10 @@
+{% extends "index_layout.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+    <form name="add_question" action="/ask/" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" title="Add">Create</button>
+    </form>
+
+{% endblock %}

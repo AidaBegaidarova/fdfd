@@ -1,0 +1,6 @@
+
+    <form action="/answer/" name="add_answer" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" title="add">Create answer</button>
+    </form>

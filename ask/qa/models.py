@@ -25,8 +25,8 @@ class AnswerManager(models.Manager):
 class Question(models.Model):
     title = models.CharField(max_length=150)
     text = models.TextField()
-    added_at = models.DateTimeField(blank=True)
-    rating = models.IntegerField(default=0, blank=True)
+    added_at = models.DateTimeField(blank=True, null=True)
+    rating = models.IntegerField(default=0, blank=True, null=True)
     author = models.ForeignKey(User, related_name='users_questions')
     likes = models.ManyToManyField(User, related_name='users_likes')
     objects = QuestionManager()
@@ -41,12 +41,16 @@ class Question(models.Model):
     class Meta:
         db_table = 'questions'
 
+
 class Answer(models.Model):
     text = models.TextField()
-    added_at = models.DateTimeField(blank=True)
+    added_at = models.DateTimeField(blank=True, null=True)
     author = models.ForeignKey(User)
     question = models.ForeignKey(Question)
     objects = AnswerManager()
+
+    def get_url(self):
+        return reverse('questions_id', kwargs={'id': str(self.question_id)})
 
     def __unicode__(self):
         return self.text
