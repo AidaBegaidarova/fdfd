@@ -1,0 +1,15 @@
+{% extends "index_layout.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block content %}
+    <h2>
+        {{ question.title }}
+    </h2>
+    <p>{{ question.text }}</p>
+    {% for a in answers %}
+        <h6>
+            Answer:
+        </h6>
+        <br>
+        <p>{{ a.text }}</p><br>
+    {% endfor %}
+{% endblock %}
