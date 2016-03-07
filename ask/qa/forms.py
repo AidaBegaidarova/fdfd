@@ -12,7 +12,8 @@ class AskForm(forms.Form):
 
 class AnswerForm(forms.Form):
     text = forms.CharField(widget=forms.Textarea)
-    question = forms.CharField(widget=forms.HiddenInput)
+    #question = forms.CharField(widget=forms.HiddenInput)
+    question = forms.IntegerField()
 
     def save(self):
         a = Answer()
