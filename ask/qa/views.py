@@ -33,7 +33,7 @@ def new_questions(request):
         page = int(request.GET.get('page', 1))
     except ValueError:
         raise Http404
-    questions = Question.objects.sort_by_date().all()
+    questions = Question.objects.sort_by_id().all()
     page = paginate(questions, page)
     paginator = page.paginator
     paginator.baseurl = '/?page='

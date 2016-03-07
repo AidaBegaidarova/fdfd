@@ -12,6 +12,9 @@ class QuestionManager(models.Manager):
     def sort_by_rating(self, order='-'):
         return self.get_queryset().order_by(order + 'rating')
 
+    def sort_by_id(self, order='-'):
+        return self.get_queryset().order_by(order + 'id')
+
 
 class AnswerManager(models.Manager):
 
