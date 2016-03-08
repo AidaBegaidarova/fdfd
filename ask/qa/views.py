@@ -118,7 +118,8 @@ def signup(request):
         form = UserRegisterForm(request.POST)
         if form.is_valid():
             user = form.save()
-            user = auth.authenticate(username=request.POST.get('username'), password=request.POST.get('password1'))
+            user = auth.authenticate(username=request.POST.get('username'), password=request.POST.get('password'))
+            auth.login(request, user)
             return HttpResponseRedirect('/')
     else:
         form = UserRegisterForm()
