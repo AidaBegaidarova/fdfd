@@ -3,8 +3,10 @@ from django.http import HttpResponse, HttpResponseRedirect
 from qa.models import Question, Answer
 from django.core.paginator import Paginator, Page, EmptyPage
 from django.http.response import Http404
-from forms import AnswerForm, AskForm
+from forms import AnswerForm, AskForm, UserRegisterForm
 from django.views.decorators.http import require_POST
+from django.contrib import auth
+
 
 def paginate(qs, page=1, limit=10):
     try:
@@ -91,6 +93,7 @@ def question(request, id):
 def add_question(request):
     if request.method == 'POST':
         form = AskForm(request.POST)
+        form._user = request.user
         if form.is_valid():
             question = form.save()
             return HttpResponseRedirect(question.get_url())
@@ -100,15 +103,29 @@ def add_question(request):
         'form': form,
     })
 
-
 @require_POST
 def add_answer(request):
     if request.method == 'POST':
         form = AnswerForm(request.POST)
+        form._user = request.user
         if form.is_valid():
             answer = form.save()
             return HttpResponseRedirect(answer.get_url())
-    return HttpResponseRedirect(request.META.HTTP_REFERER)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            user = auth.authenticate(username=request.POST.get('username'), password=request.POST.get('password1'))
+            return HttpResponseRedirect('/')
+    else:
+        form = UserRegisterForm()
+    return render(request, 'registration/register.html', {
+        'form': form
+    })
+
 
 
 

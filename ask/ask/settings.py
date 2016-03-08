@@ -67,7 +67,8 @@ DATABASES = {
         'HOST': '127.0.0.1',
     }
 }
-from db_local import DATABASES
+if os.path.exists(BASE_DIR + '/ask/db_local.py'):
+    from db_local import DATABASES
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
