@@ -10,7 +10,7 @@ from django.contrib.auth.views import login, logout
 def ret404():
     return HttpResponse(status=404)
 
-urlpatterns = patterns('',
+urlpatterns = [
     # Examples:
     # url(r'^$', 'ask.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
@@ -26,4 +26,4 @@ urlpatterns = patterns('',
     url(r'^login/$', login, name='login'),
     url(r'^logout/$', logout, {'next_page': '/'}, name='logout'),
     url(r'^answer/$', 'qa.views.add_answer', name='add_answer'),
-)
+]
